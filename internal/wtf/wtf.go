@@ -18,16 +18,27 @@ type DialID int
 
 // Dial represents an adjustable WTF level associated with a user.
 type Dial struct {
-	ID       DialID    `json:"dialID"`
-	UserID   UserID    `json:"userID"`
-	Name     string    `json:"name,omitempty"`
-	Level    float64   `json:"level"`
-	ModeTime time.Time `json:"modTime"`
+	ID      DialID    `json:"dialID"`
+	UserID  UserID    `json:"userID"`
+	Name    string    `json:"name,omitempty"`
+	Level   float64   `json:"level"`
+	ModTime time.Time `json:"modTime"`
 }
 
-// UserService represents a service for managing users.
-type UserService interface {
+// Authenticator represents a service for authenticating users.
+type Authenticator interface {
 	Authenticate(token string) (*User, error)
+}
+
+// Client creates a connection to the services.
+type Client interface {
+	Connect() Session
+}
+
+// Session represents authenticable connection to the services.
+type Session interface {
+	SetAuthToken(token string)
+	DialService() DialService
 }
 
 // DialService represents a service for managing dials.
