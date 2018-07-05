@@ -12,8 +12,8 @@ import (
 // MarshalDial encodes a dial to binary format.
 func MarshalDial(d *wtf.Dial) ([]byte, error) {
 	return proto.Marshal(&Dial{
-		ID:      int64(d.ID),
-		UserID:  int64(d.UserID),
+		ID:      string(d.ID),
+		Token:   d.Token,
 		Name:    d.Name,
 		Level:   d.Level,
 		ModTime: d.ModTime.UnixNano(),
@@ -27,11 +27,11 @@ func UnmarshalDial(data []byte, d *wtf.Dial) error {
 		return err
 	}
 
-	d.ID = wtf.DialID(pb.GetID())
-	d.UserID = wtf.UserID(pb.GetUserID())
-	d.Name = pb.GetName()
-	d.Level = pb.GetLevel()
-	d.ModTime = time.Unix(0, pb.GetModTime()).UTC()
+	d.ID = wtf.DialID(pb.ID)
+	d.Token = pb.Token
+	d.Name = pb.Name
+	d.Level = pb.Level
+	d.ModTime = time.Unix(0, pb.ModTime).UTC()
 
 	return nil
 }

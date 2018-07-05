@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/phantomnat/wtf-dial/internal/wtf/bolt"
-	"github.com/phantomnat/wtf-dial/internal/wtf/mock"
 )
 
 // Now is the mocked current time for testing.
@@ -15,8 +14,6 @@ var Now = time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC)
 // Client is a test wrapper for bolt.Client.
 type Client struct {
 	*bolt.Client
-
-	Authenticator mock.Authenticator
 }
 
 // NewClient returns a new instance of Client pointing at a temporary file.
@@ -31,14 +28,10 @@ func NewClient() *Client {
 
 	// Create client wrapper.
 	c := &Client{
-		Client:        bolt.NewClient(),
-		Authenticator: mock.DefaultAuthenticator(),
+		Client: bolt.NewClient(),
 	}
 	c.Path = f.Name()
 	c.Now = func() time.Time { return Now }
-
-	// Assign mocks to the implementation.
-	c.Client.Authenticator = &c.Authenticator
 
 	return c
 }

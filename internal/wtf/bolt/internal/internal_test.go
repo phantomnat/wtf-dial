@@ -12,8 +12,8 @@ import (
 // Ensure dial can be marshaled and unmarshaled.
 func TestMarshalData(t *testing.T) {
 	v := wtf.Dial{
-		ID:      1,
-		UserID:  2,
+		ID:      "ID",
+		Token:   "TOKEN",
 		Name:    "MyDial",
 		Level:   10.2,
 		ModTime: time.Now().UTC(),

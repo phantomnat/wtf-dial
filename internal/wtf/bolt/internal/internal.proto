@@ -3,14 +3,9 @@ syntax = "proto3";
 package internal;
 
 message Dial {
-    int64 ID = 1;
-    int64 UserID = 2;
+    string ID = 1;
+    string Token = 2;
     string Name = 3;
     double Level = 4;
     int64 ModTime = 5;
-}
-
-message User {
-    int64 ID = 1;
-    string Username = 2;
 }
